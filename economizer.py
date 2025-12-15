@@ -473,9 +473,9 @@ def plot_mix_temp_ratio(df_θm, df_u):
     plt.show()
 
 
-α = 0.10    # 100 %, outdoor air mixing rate
-θr = 23     # °C, return air temperature
-mix_process(α, θr, [-10, 40])
+# α = 0.10    # 100 %, outdoor air mixing rate
+# θr = 23     # °C, return air temperature
+# mix_process(α, θr, [-10, 40])
 
 # # Input values
 # θo = [10, 26, 0.01]     # °C, Outdoor temperarure from min to max with step dθo
