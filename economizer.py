@@ -46,8 +46,8 @@ def mix_process(alpha, temp_return, temp_range):
             label=rf'$\alpha = {alpha}$')
 
     # Plot the additional lines in red
-    ax.plot(theta_o, theta_m_0, 'r--', label=r'$\alpha = 0$')
-    ax.plot(theta_o, theta_m_1, 'r--', label=r'$\alpha = 1$')
+    ax.plot(theta_o, theta_m_0, '--', color='gray', label=r'$\alpha = 0$')
+    ax.plot(theta_o, theta_m_1, '-', color='gray', label=r'$\alpha = 1$')
 
     # Mark the point (θr, θr)
     ax.scatter(theta_r, theta_r, color='red', zorder=5)
@@ -472,6 +472,10 @@ def plot_mix_temp_ratio(df_θm, df_u):
     # plt.tight_layout()
     plt.show()
 
+
+α = 0.10    # 100 %, outdoor air mixing rate
+θr = 23     # °C, return air temperature
+mix_process(α, θr, [-10, 40])
 
 # # Input values
 # θo = [10, 26, 0.01]     # °C, Outdoor temperarure from min to max with step dθo
