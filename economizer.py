@@ -276,6 +276,8 @@ def ideal_mix_temp(
     df.loc[cool, "θm"] = mix(df.loc[cool, "θo"], θrc)
     df.loc[cool, "process"] = "cooling"
 
+    df[["θo", "θm"]] = df[["θo", "θm"]].round(3)
+
     return df
 
 
@@ -316,6 +318,7 @@ def mix_ratio(df_θm):
 
     # Copy input dataframe
     df = df_θm.copy()
+    df[["θo", "θm"]] = df[["θo", "θm"]].round(3)
 
     # Initialize u
     df["u"] = np.nan
@@ -337,6 +340,9 @@ def mix_ratio(df_θm):
         (df.loc[mask_c, "θm"] - θrc) /
         (df.loc[mask_c, "θo"] - θrc)
     )
+    # Enforce u = α when θm == θo
+    mask_equal = mask_c & (df["θm"] == df["θo"])
+    df.loc[mask_equal, "u"] = α
 
     # --------------------------------------------------
     # Free-running
