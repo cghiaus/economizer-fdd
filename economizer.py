@@ -340,9 +340,8 @@ def mix_ratio(df_θm):
         (df.loc[mask_c, "θm"] - θrc) /
         (df.loc[mask_c, "θo"] - θrc)
     )
-    # Enforce u = α when θm == θo
-    mask_equal = mask_c & (df["θm"] == df["θo"])
-    df.loc[mask_equal, "u"] = α
+    # Enforce u = α when θo == θrc
+    df.loc[np.isclose(df["θo"], θrc), "u"] = α
 
     # --------------------------------------------------
     # Free-running
@@ -479,25 +478,25 @@ def plot_mix_temp_ratio(df_θm, df_u):
     plt.show()
 
 
-# α = 0.10    # 100 %, outdoor air mixing rate
-# θr = 23     # °C, return air temperature
-# mix_process(α, θr, [-10, 40])
+α = 0.10    # 100 %, outdoor air mixing rate
+θr = 23     # °C, return air temperature
+mix_process(α, θr, [-10, 40])
 
-# # Input values
-# θo = [10, 26, 0.01]     # °C, Outdoor temperarure from min to max with step dθo
-# θB = [12, 13]           # °C, Base temperature for heating θBh and cooling θBc
-# θM = 16.                # °C, Mixed air temperature setpoint in free-cooling
-# θL = 24.                # °C, Outdoor dry‑bulb limit setpoint for free-cooling
-# θr = [22, 24]           # °C,, Return air temperature for heating and cooling
-# α = 0.1                 # α ∈ [0, 1], Ratio of outdoor air in the mixed air
+# Input values
+θo = [10, 26, 0.01]     # °C, Outdoor temperarure from min to max with step dθo
+θB = [12, 13]           # °C, Base temperature for heating θBh and cooling θBc
+θM = 16.                # °C, Mixed air temperature setpoint in free-cooling
+θL = 24.                # °C, Outdoor dry‑bulb limit setpoint for free-cooling
+θr = [22, 24]           # °C,, Return air temperature for heating and cooling
+α = 0.1                 # α ∈ [0, 1], Ratio of outdoor air in the mixed air
 
-# # Compute & plot df_θm
-# df_θm = ideal_mix_temp(θo, θB, θM, θL, θr, α)
-# plot_ideal_mix_temp(df_θm)
+# Compute & plot df_θm
+df_θm = ideal_mix_temp(θo, θB, θM, θL, θr, α)
+plot_ideal_mix_temp(df_θm)
 
-# # Compute & plot df_θu
-# df_u = mix_ratio(df_θm)
-# plt.figure()
-# plot_mix_ratio(df_u)
+# Compute & plot df_θu
+df_u = mix_ratio(df_θm)
+plt.figure()
+plot_mix_ratio(df_u)
 
-# plot_mix_temp_ratio(df_θm, df_u)
+plot_mix_temp_ratio(df_θm, df_u)
